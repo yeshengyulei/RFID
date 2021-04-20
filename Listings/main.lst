@@ -1,0 +1,395 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              04/20/2021 08:10:18 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          
+   3          unsigned char code PuZh[] = {0x03, 0x08, 0xC1, 0x20, 0x08, 0x00, 0x00, 0x1E};
+   4          unsigned char code baozhan00001[] = {0xAA, 0x07, 0x02, 0x00, 0x0C, 0xBF };
+   5          unsigned char UartRxDataFlag = 0x00; 
+   6          unsigned char RxDataCount = 0x00;
+   7          #define UART_RX_BUF_LEN 30  
+   8          unsigned char xdata UartRxBuf[UART_RX_BUF_LEN]; //串口缓冲区大小
+   9          #define MIN_PKT_LEN      8   //主动读卡号的数据包长度为12字节
+  10          #define MAX_PKT_LEN      28   //主动读卡号+指定数据块的数据包长度为28字节
+  11          unsigned char buf[MAX_PKT_LEN];
+  12          unsigned char CardData[UART_RX_BUF_LEN];  
+  13          unsigned char j;
+  14          unsigned char i;
+  15          unsigned char ReverOrCoro ;
+  16          unsigned char cnt=0;
+  17          void UsartConfiguration();
+  18          void Delay10ms(unsigned int c);
+  19          void Out_Data (unsigned char Data[]);
+  20          void ProcessUartRxData(void);
+  21          
+  22          sbit IN1=P1^0;
+  23          sbit IN2=P1^1;
+  24          sbit IN3=P1^2;
+  25          sbit IN4=P1^3;
+  26          sbit IN5=P1^4;
+  27          sbit IN6=P1^5;
+  28          sbit IN7=P1^6;
+  29          sbit IN8=P1^7;
+  30          
+  31          sbit lsen1=P3^5;
+  32          sbit rsen1=P3^4;
+  33          
+  34          sbit IO1 = P2^1;
+  35          sbit IO2 = P2^2;
+  36          sbit IO3 = P2^3;
+  37          sbit IO4 = P2^4;
+  38          sbit IO5 = P2^5;
+  39          sbit IO6 = P2^6;
+  40          sbit IO7 = P2^7;
+  41          
+  42          unsigned int pos_x=0;
+  43          unsigned int pos_y=0;
+  44          
+  45          
+  46          /* void UART() interrupt 4  //串口中断
+  47          {
+  48                  ES = 0;
+  49            if(RI)  //检测是否接收完成 当硬件接收一个数据时 RI 高位
+  50            {
+  51                          RI = 0;
+  52                          if(UartRxDataFlag == 0x00)
+  53                          {
+  54                                  UartRxBuf[RxDataCount] = SBUF;
+C51 COMPILER V9.60.0.0   MAIN                                                              04/20/2021 08:10:18 PAGE 2   
+
+  55                                  RxDataCount++;
+  56                                  if(RxDataCount >= UART_RX_BUF_LEN)
+  57                                  {
+  58                                          RxDataCount = UART_RX_BUF_LEN - 1;
+  59                                  }
+  60                                  if ((UartRxBuf[1] == RxDataCount)&&(UartRxBuf[1] >= MIN_PKT_LEN)&&(UartRxBuf[1] <=
+             - MAX_PKT_LEN))
+  61                                  {
+  62                                          UartRxDataFlag = 0x01;
+  63                                          RxDataCount = 0x00;
+  64                                  }
+  65                                  else if ((UartRxBuf[1]<MIN_PKT_LEN)&&(UartRxBuf[1] > MAX_PKT_LEN))
+  66                                  {
+  67                                          RxDataCount = 0x00;
+  68                                  }
+  69                          }
+  70            }
+  71                  EA = 1;
+  72          } */
+  73           
+  74          
+  75          
+  76          
+  77          
+  78          
+  79          void  Motor_right1();   //????
+  80          void  Motor_left1();
+  81          void  Motor_right2();   //????
+  82          void  Motor_left2();
+  83          
+  84          
+  85          
+  86          
+  87          void Motor_left1(bit ReverOrCoro)    //???
+  88          {
+  89   1        if(ReverOrCoro == 1)
+  90   1        {
+  91   2          IN1=1;
+  92   2          IN2=0;
+  93   2        }
+  94   1        else
+  95   1        {
+  96   2          IN2=1;
+  97   2          IN1=0;
+  98   2        }
+  99   1      }
+ 100          
+ 101          void Motor_left2(bit ReverOrCoro)    //??? ???
+ 102          {
+ 103   1        if(ReverOrCoro == 1)
+ 104   1        {
+ 105   2          IN5=1;
+ 106   2          IN6=0;
+ 107   2        }
+ 108   1        else
+ 109   1        {
+ 110   2          IN5=0;
+ 111   2          IN6=1;
+ 112   2        }
+ 113   1      }
+ 114          
+ 115          void Motor_right1(bit ReverOrCoro)    //??? ???
+C51 COMPILER V9.60.0.0   MAIN                                                              04/20/2021 08:10:18 PAGE 3   
+
+ 116          {
+ 117   1        if(ReverOrCoro == 1)
+ 118   1        {
+ 119   2          IN3=1;
+ 120   2          IN4=0;
+ 121   2        }
+ 122   1        else
+ 123   1        {
+ 124   2        IN4=1;
+ 125   2        IN3=0;
+ 126   2        }
+ 127   1      }
+ 128          
+ 129          void Motor_right2(bit ReverOrCoro)    //??? ???
+ 130          {
+ 131   1        if(ReverOrCoro == 1)
+ 132   1        {
+ 133   2        IN7=1;
+ 134   2        IN8=0;
+ 135   2        }
+ 136   1        else
+ 137   1        {
+ 138   2        IN8=1;
+ 139   2        IN7=0;
+ 140   2        }
+ 141   1      }
+ 142          
+ 143          
+ 144          
+ 145          void stop()
+ 146          {
+ 147   1        IN1=0;
+ 148   1        IN2=0;
+ 149   1        IN3=0;
+ 150   1        IN4=0;
+ 151   1        IN5=0;
+ 152   1        IN6=0;
+ 153   1        IN7=0;
+ 154   1        IN8=0;
+ 155   1      }
+ 156          
+ 157          void qianjin()
+ 158          {
+ 159   1          Motor_left1(1);
+ 160   1          Motor_right1(1);
+ 161   1          Motor_left2(1);
+ 162   1          Motor_right2(1);    
+ 163   1      }
+ 164          
+ 165          
+ 166          void turn_left()
+ 167          {
+ 168   1          Motor_left1(1);
+ 169   1          Motor_right1(0);
+ 170   1          Motor_left2(1);
+ 171   1        Motor_right2(0);   
+ 172   1      }
+ 173          
+ 174          void turn_right()
+ 175          {
+ 176   1          Motor_left1(0);
+ 177   1        Motor_right1(1);
+C51 COMPILER V9.60.0.0   MAIN                                                              04/20/2021 08:10:18 PAGE 4   
+
+ 178   1          Motor_left2(0);
+ 179   1        Motor_right2(1);
+ 180   1      }
+ 181          
+ 182          void xunji()   //?????
+ 183          {
+ 184   1        unsigned char flag;
+ 185   1        if((rsen1==0)&&(lsen1==0))
+ 186   1        {
+ 187   2          flag=0;
+ 188   2        }
+ 189   1        else
+ 190   1         if((rsen1==1)&&(lsen1==0))
+ 191   1        {
+ 192   2          flag=1;
+ 193   2        }
+ 194   1        else
+ 195   1        if((rsen1==0)&&(lsen1==1))
+ 196   1        {
+ 197   2          flag=2;
+ 198   2        }
+ 199   1        else
+ 200   1        if((rsen1==1)&&(lsen1==1))
+ 201   1        {
+ 202   2          flag=3;
+ 203   2        }
+ 204   1        
+ 205   1        switch(flag)
+ 206   1        {
+ 207   2          case 0:qianjin();break;
+ 208   2          case 1:turn_right();break;
+ 209   2          case 2:turn_left();break;
+ 210   2          case 3:stop();break;
+ 211   2          default:break;
+ 212   2        }
+ 213   1          
+ 214   1      }
+ 215          
+ 216          
+ 217          
+ 218          
+ 219          //
+ 220          //
+ 221          //
+ 222          void UART_SER (void) interrupt 4 //????????
+ 223          {
+ 224   1         //unsigned char Temp;          //?????? 
+ 225   1      
+ 226   1         if(RI)                        //?????????
+ 227   1           {
+ 228   2        RI=0;                      //?????
+ 229   2        //Temp=SBUF;                 //???????
+ 230   2              if(UartRxDataFlag == 0x00)
+ 231   2                      {
+ 232   3                              UartRxBuf[RxDataCount] = SBUF;
+ 233   3                              RxDataCount++;
+ 234   3                              if(RxDataCount >= UART_RX_BUF_LEN)
+ 235   3                              {
+ 236   4                                      RxDataCount = UART_RX_BUF_LEN - 1;
+ 237   4                              }
+ 238   3                              if ((UartRxBuf[1] == RxDataCount)&&(UartRxBuf[1] >= MIN_PKT_LEN)&&(UartRxBuf[1] <=
+             - MAX_PKT_LEN))
+C51 COMPILER V9.60.0.0   MAIN                                                              04/20/2021 08:10:18 PAGE 5   
+
+ 239   3                              {
+ 240   4                                      UartRxDataFlag = 0x01;
+ 241   4                                      RxDataCount = 0x00;
+ 242   4                              }
+ 243   3                              else if ((UartRxBuf[1]<MIN_PKT_LEN)&&(UartRxBuf[1] > MAX_PKT_LEN))
+ 244   3                              {
+ 245   4                                      RxDataCount = 0x00;
+ 246   4                              }
+ 247   3                      }
+ 248   2            //SBUF=Temp;                 //????????????
+ 249   2      
+ 250   2          
+ 251   2         }
+ 252   1         if(TI)                        //????????,??
+ 253   1           TI=0;
+ 254   1      }
+ 255          //
+ 256          //04 16 03 20 00 62 72 74 00 01 00 00 00 00 00 00 00 00 00 00 00 AB
+ 257          //
+ 258          void main(void)
+ 259          {
+ 260   1              UsartConfiguration();
+ 261   1              Delay10ms(10);
+ 262   1          EA = 1;
+ 263   1              ES=0;
+ 264   1              TI=0;        
+ 265   1              j =  sizeof(PuZh);
+ 266   1      
+ 267   1              for (i=0;i<j;i++)//
+ 268   1              {
+ 269   2                  SBUF = PuZh[i];
+ 270   2                  while (!TI);
+ 271   2                  TI = 0;
+ 272   2              }
+ 273   1      
+ 274   1              ES=1;
+ 275   1      
+ 276   1              for(i=0;i<UART_RX_BUF_LEN;i++)
+ 277   1                UartRxBuf[i] = 0;
+ 278   1              while(1)
+ 279   1              {
+ 280   2                  xunji();
+ 281   2                  ProcessUartRxData();
+ 282   2              }
+ 283   1      }
+ 284          
+ 285          void UsartConfiguration(void)
+ 286          {
+ 287   1              SCON=0X50;
+ 288   1              TMOD=0X20;
+ 289   1              PCON=0X00;
+ 290   1              TH1=0XFD;
+ 291   1              TL1=0XFD;
+ 292   1              TR1=1;
+ 293   1              REN = 1;
+ 294   1      }
+ 295          
+ 296          void Delay10ms(unsigned int c)
+ 297          {
+ 298   1          unsigned char a, b;
+ 299   1          for (;c>0;c--)
+ 300   1              {
+C51 COMPILER V9.60.0.0   MAIN                                                              04/20/2021 08:10:18 PAGE 6   
+
+ 301   2                      for (b=38;b>0;b--)
+ 302   2                      {
+ 303   3                              for (a=130;a>0;a--);
+ 304   3                      }         
+ 305   2              }      
+ 306   1      }
+ 307          
+ 308          
+ 309          
+ 310          
+ 311          void ProcessUartRxData(void)
+ 312          {
+ 313   1      
+ 314   1              if(UartRxDataFlag)
+ 315   1              {
+ 316   2                      for(i=0;i<29;i++)
+ 317   2                      {
+ 318   3                              buf[i] = UartRxBuf[i];
+ 319   3                      }
+ 320   2                      UartRxDataFlag = 0x00;
+ 321   2                      if((buf[0] == 0x04)&&(buf[1] == 0x16)&&(buf[2] == 0x03)&&(buf[3] == 0x20)&&(buf[4] ==0x00)
+             -)
+ 322   2                      {
+ 323   3                              for(i = 0; i < 16 ; i++)
+ 324   3                              {
+ 325   4                                      CardData[i] = buf[(5+i)];
+ 326   4                              }
+ 327   3                              if((CardData[0]==0x62)&&(CardData[1] == 0x72)&&(CardData[2] == 0x74)&&(CardData[3]
+             -==0x00)&&(CardData[4] == 0x01))
+ 328   3                              {
+ 329   4                                      IO1 = 0;
+ 330   4                                      IO2 = 1;
+ 331   4                                      IO3 = 1;
+ 332   4                                      IO4 = 1;
+ 333   4                                      IO5 = 1;
+ 334   4                                      IO6 = 1;
+ 335   4                                      IO7 = 1;
+ 336   4                              }
+ 337   3                              if((CardData[0]==0x62)&&(CardData[1] == 0x72)&&(CardData[2] == 0x74)&&(CardData[3]
+             -==0x00)&&(CardData[4] == 0x02))
+ 338   3                              {
+ 339   4                                      IO1 = 1;
+ 340   4                                      IO2 = 0;
+ 341   4                                      IO3 = 1;
+ 342   4                                      IO4 = 1;
+ 343   4                                      IO5 = 1;
+ 344   4                                      IO6 = 1;
+ 345   4                                      IO7 = 1;
+ 346   4                              }
+ 347   3                      }
+ 348   2                      
+ 349   2      
+ 350   2                      
+ 351   2                for(i=0;i<UART_RX_BUF_LEN;i++)  //清空串口缓冲区
+ 352   2                UartRxBuf[i] = 0x00;                 
+ 353   2              }
+ 354   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    713    ----
+   CONSTANT SIZE    =     14    ----
+C51 COMPILER V9.60.0.0   MAIN                                                              04/20/2021 08:10:18 PAGE 7   
+
+   XDATA SIZE       =     30    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     68    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       4
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

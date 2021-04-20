@@ -1,0 +1,494 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    04/20/2021  08:10:19  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\main.obj TO .\Objects\RFIDCARD PRINT (.\Listings\RFIDCARD.m
+>> 51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\main.obj (MAIN)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\RFIDCARD (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+                    0008H     0018H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         _BIT_GROUP_
+                    0020H.1   0000H.7                *** GAP ***
+            DATA    0021H     0044H     UNIT         ?DT?MAIN
+            IDATA   0065H     0001H     UNIT         ?STACK
+
+            * * * * * * *  X D A T A   M E M O R Y  * * * * * * *
+            XDATA   0000H     001EH     UNIT         ?XD?MAIN
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0014H     UNIT         ?PR?QIANJIN?MAIN
+                    0017H     000CH                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     00EBH     UNIT         ?PR?PROCESSUARTRXDATA?MAIN
+            CODE    0111H     008CH     UNIT         ?C_C51STARTUP
+            CODE    019DH     0082H     UNIT         ?PR?UART_SER?MAIN
+            CODE    021FH     0057H     UNIT         ?PR?MAIN?MAIN
+            CODE    0276H     0041H     UNIT         ?PR?XUNJI?MAIN
+            CODE    02B7H     002FH     UNIT         ?PR?_DELAY10MS?MAIN
+            CODE    02E6H     0014H     UNIT         ?PR?TURN_LEFT?MAIN
+            CODE    02FAH     0014H     UNIT         ?PR?TURN_RIGHT?MAIN
+            CODE    030EH     0014H     UNIT         ?PR?USARTCONFIGURATION?MAIN
+            CODE    0322H     0012H     UNIT         ?C_INITSEG
+            CODE    0334H     0011H     UNIT         ?PR?STOP?MAIN
+            CODE    0345H     000EH     UNIT         ?CO?MAIN
+            CODE    0353H     000DH     UNIT         ?PR?MOTOR_LEFT1?MAIN
+            CODE    0360H     000DH     UNIT         ?PR?MOTOR_LEFT2?MAIN
+            CODE    036DH     000DH     UNIT         ?PR?MOTOR_RIGHT1?MAIN
+            CODE    037AH     000DH     UNIT         ?PR?MOTOR_RIGHT2?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\RFIDCARD (?C_STARTUP)
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  04/20/2021  08:10:19  PAGE 2
+
+
+SEGMENT                                BIT_GROUP 
+  +--> CALLED SEGMENT               START    LENGTH
+---------------------------------------------------
+?C_C51STARTUP                       -----    -----
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN                       -----    -----
+  +--> ?PR?USARTCONFIGURATION?MAIN
+  +--> ?PR?_DELAY10MS?MAIN
+  +--> ?CO?MAIN
+  +--> ?PR?XUNJI?MAIN
+  +--> ?PR?PROCESSUARTRXDATA?MAIN
+
+?PR?XUNJI?MAIN                      -----    -----
+  +--> ?PR?QIANJIN?MAIN
+  +--> ?PR?TURN_RIGHT?MAIN
+  +--> ?PR?TURN_LEFT?MAIN
+  +--> ?PR?STOP?MAIN
+
+?PR?QIANJIN?MAIN                    -----    -----
+  +--> ?PR?MOTOR_LEFT1?MAIN
+  +--> ?PR?MOTOR_RIGHT1?MAIN
+  +--> ?PR?MOTOR_LEFT2?MAIN
+  +--> ?PR?MOTOR_RIGHT2?MAIN
+
+?PR?MOTOR_LEFT1?MAIN                0020H.0  0000H.1
+
+?PR?MOTOR_RIGHT1?MAIN               0020H.0  0000H.1
+
+?PR?MOTOR_LEFT2?MAIN                0020H.0  0000H.1
+
+?PR?MOTOR_RIGHT2?MAIN               0020H.0  0000H.1
+
+?PR?TURN_RIGHT?MAIN                 -----    -----
+  +--> ?PR?MOTOR_LEFT1?MAIN
+  +--> ?PR?MOTOR_RIGHT1?MAIN
+  +--> ?PR?MOTOR_LEFT2?MAIN
+  +--> ?PR?MOTOR_RIGHT2?MAIN
+
+?PR?TURN_LEFT?MAIN                  -----    -----
+  +--> ?PR?MOTOR_LEFT1?MAIN
+  +--> ?PR?MOTOR_RIGHT1?MAIN
+  +--> ?PR?MOTOR_LEFT2?MAIN
+  +--> ?PR?MOTOR_RIGHT2?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\RFIDCARD (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0111H         SEGMENT       ?C_C51STARTUP
+  I:0065H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  04/20/2021  08:10:19  PAGE 3
+
+
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0114H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0111H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0111H         LINE#         133
+  C:0113H         LINE#         134
+  C:0114H         LINE#         135
+  C:0115H         LINE#         136
+  C:0117H         LINE#         185
+  C:011AH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  C:019DH         PUBLIC        UART_SER
+  X:0000H         PUBLIC        UartRxBuf
+  C:0345H         PUBLIC        PuZh
+  D:00A8H         PUBLIC        IE
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:021FH         PUBLIC        main
+  D:0021H         PUBLIC        pos_x
+  D:0023H         PUBLIC        pos_y
+  C:0276H         PUBLIC        xunji
+  D:0099H         PUBLIC        SBUF
+  D:0087H         PUBLIC        PCON
+  D:0098H         PUBLIC        SCON
+  C:02B7H         PUBLIC        _Delay10ms
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:0025H         PUBLIC        buf
+  D:0041H         PUBLIC        cnt
+  C:036DH         PUBLIC        Motor_right1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  04/20/2021  08:10:19  PAGE 4
+
+
+  C:0334H         PUBLIC        stop
+  C:037AH         PUBLIC        Motor_right2
+  B:0090H.0       PUBLIC        IN1
+  B:00A0H.1       PUBLIC        IO1
+  B:0090H.1       PUBLIC        IN2
+  B:00A0H.2       PUBLIC        IO2
+  B:0090H.2       PUBLIC        IN3
+  B:00A0H.3       PUBLIC        IO3
+  B:0090H.3       PUBLIC        IN4
+  C:0026H         PUBLIC        ProcessUartRxData
+  B:00A0H.4       PUBLIC        IO4
+  B:0090H.4       PUBLIC        IN5
+  C:02FAH         PUBLIC        turn_right
+  B:00A0H.5       PUBLIC        IO5
+  B:0090H.5       PUBLIC        IN6
+  D:008DH         PUBLIC        TH1
+  B:00A0H.6       PUBLIC        IO6
+  B:0090H.6       PUBLIC        IN7
+  B:00A0H.7       PUBLIC        IO7
+  B:0090H.7       PUBLIC        IN8
+  D:008BH         PUBLIC        TL1
+  C:0353H         PUBLIC        Motor_left1
+  C:0360H         PUBLIC        Motor_left2
+  D:0042H         PUBLIC        RxDataCount
+  B:0088H.6       PUBLIC        TR1
+  C:02E6H         PUBLIC        turn_left
+  C:034DH         PUBLIC        baozhan00001
+  D:0043H         PUBLIC        ReverOrCoro
+  D:0044H         PUBLIC        UartRxDataFlag
+  B:00B0H.5       PUBLIC        lsen1
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  D:0045H         PUBLIC        i
+  D:0046H         PUBLIC        j
+  B:00B0H.4       PUBLIC        rsen1
+  C:0003H         PUBLIC        qianjin
+  C:030EH         PUBLIC        UsartConfiguration
+  D:0047H         PUBLIC        CardData
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MOTOR_LEFT1
+  B:0020H.0       SYMBOL        ReverOrCoro
+  C:0353H         LINE#         87
+  C:0353H         LINE#         88
+  C:0353H         LINE#         89
+  C:0356H         LINE#         90
+  C:0356H         LINE#         91
+  C:0358H         LINE#         92
+  C:035AH         LINE#         93
+  C:035BH         LINE#         95
+  C:035BH         LINE#         96
+  C:035DH         LINE#         97
+  C:035FH         LINE#         98
+  C:035FH         LINE#         99
+  -------         ENDPROC       MOTOR_LEFT1
+  -------         PROC          MOTOR_LEFT2
+  B:0020H.0       SYMBOL        ReverOrCoro
+  C:0360H         LINE#         101
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  04/20/2021  08:10:19  PAGE 5
+
+
+  C:0360H         LINE#         102
+  C:0360H         LINE#         103
+  C:0363H         LINE#         104
+  C:0363H         LINE#         105
+  C:0365H         LINE#         106
+  C:0367H         LINE#         107
+  C:0368H         LINE#         109
+  C:0368H         LINE#         110
+  C:036AH         LINE#         111
+  C:036CH         LINE#         112
+  C:036CH         LINE#         113
+  -------         ENDPROC       MOTOR_LEFT2
+  -------         PROC          MOTOR_RIGHT1
+  B:0020H.0       SYMBOL        ReverOrCoro
+  C:036DH         LINE#         115
+  C:036DH         LINE#         116
+  C:036DH         LINE#         117
+  C:0370H         LINE#         118
+  C:0370H         LINE#         119
+  C:0372H         LINE#         120
+  C:0374H         LINE#         121
+  C:0375H         LINE#         123
+  C:0375H         LINE#         124
+  C:0377H         LINE#         125
+  C:0379H         LINE#         126
+  C:0379H         LINE#         127
+  -------         ENDPROC       MOTOR_RIGHT1
+  -------         PROC          MOTOR_RIGHT2
+  B:0020H.0       SYMBOL        ReverOrCoro
+  C:037AH         LINE#         129
+  C:037AH         LINE#         130
+  C:037AH         LINE#         131
+  C:037DH         LINE#         132
+  C:037DH         LINE#         133
+  C:037FH         LINE#         134
+  C:0381H         LINE#         135
+  C:0382H         LINE#         137
+  C:0382H         LINE#         138
+  C:0384H         LINE#         139
+  C:0386H         LINE#         140
+  C:0386H         LINE#         141
+  -------         ENDPROC       MOTOR_RIGHT2
+  -------         PROC          STOP
+  C:0334H         LINE#         145
+  C:0334H         LINE#         146
+  C:0334H         LINE#         147
+  C:0336H         LINE#         148
+  C:0338H         LINE#         149
+  C:033AH         LINE#         150
+  C:033CH         LINE#         151
+  C:033EH         LINE#         152
+  C:0340H         LINE#         153
+  C:0342H         LINE#         154
+  C:0344H         LINE#         155
+  -------         ENDPROC       STOP
+  -------         PROC          QIANJIN
+  C:0003H         LINE#         157
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  04/20/2021  08:10:19  PAGE 6
+
+
+  C:0003H         LINE#         158
+  C:0003H         LINE#         159
+  C:0008H         LINE#         160
+  C:000DH         LINE#         161
+  C:0012H         LINE#         162
+  -------         ENDPROC       QIANJIN
+  -------         PROC          TURN_LEFT
+  C:02E6H         LINE#         166
+  C:02E6H         LINE#         167
+  C:02E6H         LINE#         168
+  C:02EBH         LINE#         169
+  C:02F0H         LINE#         170
+  C:02F5H         LINE#         171
+  -------         ENDPROC       TURN_LEFT
+  -------         PROC          TURN_RIGHT
+  C:02FAH         LINE#         174
+  C:02FAH         LINE#         175
+  C:02FAH         LINE#         176
+  C:02FFH         LINE#         177
+  C:0304H         LINE#         178
+  C:0309H         LINE#         179
+  -------         ENDPROC       TURN_RIGHT
+  -------         PROC          XUNJI
+  -------         DO            
+  D:0007H         SYMBOL        flag
+  -------         ENDDO         
+  C:0276H         LINE#         182
+  C:0276H         LINE#         183
+  C:0276H         LINE#         185
+  C:027CH         LINE#         186
+  C:027CH         LINE#         187
+  C:027EH         LINE#         188
+  C:0280H         LINE#         190
+  C:0286H         LINE#         191
+  C:0286H         LINE#         192
+  C:0288H         LINE#         193
+  C:028AH         LINE#         195
+  C:0290H         LINE#         196
+  C:0290H         LINE#         197
+  C:0292H         LINE#         198
+  C:0294H         LINE#         200
+  C:029AH         LINE#         201
+  C:029AH         LINE#         202
+  C:029CH         LINE#         203
+  C:029CH         LINE#         205
+  C:02AAH         LINE#         206
+  C:02AAH         LINE#         207
+  C:02ADH         LINE#         208
+  C:02B0H         LINE#         209
+  C:02B3H         LINE#         210
+  C:02B6H         LINE#         211
+  C:02B6H         LINE#         212
+  C:02B6H         LINE#         214
+  -------         ENDPROC       XUNJI
+  -------         PROC          UART_SER
+  C:019DH         LINE#         222
+  C:01ACH         LINE#         226
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  04/20/2021  08:10:19  PAGE 7
+
+
+  C:01AFH         LINE#         227
+  C:01AFH         LINE#         228
+  C:01B1H         LINE#         230
+  C:01B5H         LINE#         231
+  C:01B5H         LINE#         232
+  C:01C3H         LINE#         233
+  C:01C5H         LINE#         234
+  C:01D0H         LINE#         235
+  C:01D0H         LINE#         236
+  C:01D3H         LINE#         237
+  C:01D3H         LINE#         238
+  C:01EEH         LINE#         239
+  C:01EEH         LINE#         240
+  C:01F1H         LINE#         241
+  C:01F1H         LINE#         242
+  C:01F3H         LINE#         243
+  C:020AH         LINE#         244
+  C:020AH         LINE#         245
+  C:020DH         LINE#         246
+  C:020DH         LINE#         247
+  C:020DH         LINE#         251
+  C:020DH         LINE#         252
+  C:0210H         LINE#         253
+  C:0212H         LINE#         254
+  -------         ENDPROC       UART_SER
+  -------         PROC          MAIN
+  C:021FH         LINE#         258
+  C:021FH         LINE#         259
+  C:021FH         LINE#         260
+  C:0222H         LINE#         261
+  C:0229H         LINE#         262
+  C:022BH         LINE#         263
+  C:022DH         LINE#         264
+  C:022FH         LINE#         265
+  C:0232H         LINE#         267
+  C:023CH         LINE#         268
+  C:023CH         LINE#         269
+  C:0244H         LINE#         270
+  C:0247H         LINE#         271
+  C:0249H         LINE#         272
+  C:024DH         LINE#         274
+  C:024FH         LINE#         276
+  C:025DH         LINE#         277
+  C:026EH         LINE#         278
+  C:026EH         LINE#         279
+  C:026EH         LINE#         280
+  C:0271H         LINE#         281
+  C:0274H         LINE#         282
+  -------         ENDPROC       MAIN
+  -------         PROC          USARTCONFIGURATION
+  C:030EH         LINE#         285
+  C:030EH         LINE#         286
+  C:030EH         LINE#         287
+  C:0311H         LINE#         288
+  C:0314H         LINE#         289
+  C:0317H         LINE#         290
+  C:031AH         LINE#         291
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  04/20/2021  08:10:19  PAGE 8
+
+
+  C:031DH         LINE#         292
+  C:031FH         LINE#         293
+  C:0321H         LINE#         294
+  -------         ENDPROC       USARTCONFIGURATION
+  -------         PROC          _DELAY10MS
+  D:0006H         SYMBOL        c
+  -------         DO            
+  D:0004H         SYMBOL        a
+  D:0005H         SYMBOL        b
+  -------         ENDDO         
+  C:02B7H         LINE#         296
+  C:02B7H         LINE#         297
+  C:02B7H         LINE#         299
+  C:02C0H         LINE#         300
+  C:02C0H         LINE#         301
+  C:02CCH         LINE#         302
+  C:02CCH         LINE#         303
+  C:02DBH         LINE#         304
+  C:02DEH         LINE#         305
+  C:02E5H         LINE#         306
+  -------         ENDPROC       _DELAY10MS
+  -------         PROC          PROCESSUARTRXDATA
+  C:0026H         LINE#         311
+  C:0026H         LINE#         312
+  C:0026H         LINE#         314
+  C:002DH         LINE#         315
+  C:002DH         LINE#         316
+  C:003BH         LINE#         317
+  C:003BH         LINE#         318
+  C:004FH         LINE#         319
+  C:0053H         LINE#         320
+  C:0056H         LINE#         321
+  C:007BH         LINE#         322
+  C:007BH         LINE#         323
+  C:0088H         LINE#         324
+  C:0088H         LINE#         325
+  C:0096H         LINE#         326
+  C:009AH         LINE#         327
+  C:00B9H         LINE#         328
+  C:00B9H         LINE#         329
+  C:00BBH         LINE#         330
+  C:00BDH         LINE#         331
+  C:00BFH         LINE#         332
+  C:00C1H         LINE#         333
+  C:00C3H         LINE#         334
+  C:00C5H         LINE#         335
+  C:00C7H         LINE#         336
+  C:00C7H         LINE#         337
+  C:00E3H         LINE#         338
+  C:00E3H         LINE#         339
+  C:00E5H         LINE#         340
+  C:00E7H         LINE#         341
+  C:00E9H         LINE#         342
+  C:00EBH         LINE#         343
+  C:00EDH         LINE#         344
+  C:00EFH         LINE#         345
+  C:00F1H         LINE#         346
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  04/20/2021  08:10:19  PAGE 9
+
+
+  C:00F1H         LINE#         347
+  C:00F1H         LINE#         351
+  C:00FFH         LINE#         352
+  C:0110H         LINE#         353
+  C:0110H         LINE#         354
+  -------         ENDPROC       PROCESSUARTRXDATA
+  -------         ENDMOD        MAIN
+
+Program Size: data=77.1 xdata=30 code=891
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
